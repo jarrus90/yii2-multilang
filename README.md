@@ -19,9 +19,8 @@ Sets current user language as application language
 ~~~php
     'components' => [
         'request' => [
-            'class' => 'jarrus90\Core\components\MultilangRequest',
-            'cookieValidationKey' => 'gdsgsgsB^T#Rb'
+            'class' => 'jarrus90\Core\components\MultilangRequest'
         ],
-	]
+    ]
 ~~~
 Requires user identity having field `lang`
