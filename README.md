@@ -10,8 +10,8 @@ YII 2.0
     "jarrus90/yii2-multilang": "*",
 },
 
-~~~
 php composer.phar update
+~~~
 
 #Components
 ###Multilang request
