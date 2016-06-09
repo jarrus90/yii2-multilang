@@ -29,9 +29,9 @@ class AdminController extends AdminCrudAbstract {
         parent::__construct($id, $module, $config);
     }
 
-    protected function getItem($id) {
+    protected function getItem($code) {
         $modelClass = $this->modelClass;
-        return $modelClass::findOne(['id' => $id]);
+        return $modelClass::findOne(['code' => $code]);
     }
 
 }

@@ -10,10 +10,13 @@ class LanguageSearch extends Language {
      */
     public function rules() {
         return [
-            [['code', 'title', 'enabled'], 'safe'],
+            [['code', 'name', 'enabled'], 'safe'],
         ];
     }
 
+    public function formName() {
+        return '';
+    }
     /**
      * Attribute labels
      * @return array
@@ -22,7 +25,7 @@ class LanguageSearch extends Language {
         return [
             'id' => 'ID',
             'code' => \Yii::t('multilang', 'Language code'),
-            'title' => \Yii::t('multilang', 'Title'),
+            'name' => \Yii::t('multilang', 'Title'),
             'enabled' => \Yii::t('multilang', 'Enabled'),
         ];
     }
@@ -48,7 +51,8 @@ class LanguageSearch extends Language {
         ]);
         if ($this->load($params) && $this->validate()) {
             $query->andFilterWhere(['like', 'code', $this->code]);
-            $query->andFilterWhere(['like', 'title', $this->title]);
+            $query->andFilterWhere(['like', 'name', $this->name]);
+            $query->andFilterWhere(['enabled' => $this->enabled]);
         }
         return $dataProvider;
     }
