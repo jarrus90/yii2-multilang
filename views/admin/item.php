@@ -25,6 +25,7 @@ $form = ActiveForm::begin([
 ?>
 <?= $form->field($model, 'code') ?>
 <?= $form->field($model, 'name') ?>
+<?= $form->field($model, 'flag') ?>
 <?= $form->field($model, 'enabled')->checkbox() ?>
 <?= Html::submitButton(Yii::t('multilang', 'Save'), ['class' => 'btn btn-success btn-block']) ?>
 <?php ActiveForm::end() ?>
