@@ -15,10 +15,23 @@ class Language extends ActiveRecord {
     public static function tableName() {
         return '{{%languages}}';
     }
-    
-    public static function listMap(){
-        return ArrayHelper::map(static::find()->asArray()->all(), 'code', function($model){
-            return $model['name'] . ($model['enabled'] ? '' : ' (' . Yii::t('multilang', 'disabled') .')');
-        });
+
+    /**
+     * Attribute labels
+     * @return array
+     */
+    public function attributeLabels() {
+        return [
+            'code' => Yii::t('multilang', 'Language code'),
+            'name' => Yii::t('multilang', 'Name'),
+            'enabled' => Yii::t('multilang', 'Enabled'),
+        ];
     }
+
+    public static function listMap() {
+        return ArrayHelper::map(static::find()->asArray()->all(), 'code', function($model) {
+                    return $model['name'] . ($model['enabled'] ? '' : ' (' . Yii::t('multilang', 'disabled') . ')');
+                });
+    }
+
 }

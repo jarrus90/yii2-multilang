@@ -2,6 +2,7 @@
 
 namespace jarrus90\Multilang\Models;
 
+use Yii;
 class LanguageSearch extends Language {
 
     /**
@@ -24,9 +25,9 @@ class LanguageSearch extends Language {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'code' => \Yii::t('multilang', 'Language code'),
-            'name' => \Yii::t('multilang', 'Title'),
-            'enabled' => \Yii::t('multilang', 'Enabled'),
+            'code' => Yii::t('multilang', 'Language code'),
+            'name' => Yii::t('multilang', 'Name'),
+            'enabled' => Yii::t('multilang', 'Enabled'),
         ];
     }
 
