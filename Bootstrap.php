@@ -38,8 +38,6 @@ class Bootstrap implements BootstrapInterface {
                     'sourceLanguage' => 'en-US'
                 ];
             }
-            //jarrus90\Multilang\Models\Language::find([''])
-
             $app->params['yii.migrations'][] = '@jarrus90/Multilang/migrations/';
         }
     }

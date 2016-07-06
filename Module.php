@@ -2,6 +2,7 @@
 
 namespace jarrus90\Multilang;
 
+use Yii;
 use yii\base\Module as BaseModule;
 
 class Module extends BaseModule {
@@ -15,7 +16,15 @@ class Module extends BaseModule {
 
     /** @var array The rules to be used in URL management. */
     public $urlRules = [
-        '<key:[A-Za-z0-9_-]+>' => 'front/page'
+        'set/<lang:[A-Za-z0-9_-]+>' => 'change/set'
     ];
+    
+    public $rtlLanguages = [
+        'he', 'ar'
+    ];
+
+    public function getIsRtl() {
+        return in_array(Yii::$app->language, $this->rtlLanguages);
+    }
 
 }

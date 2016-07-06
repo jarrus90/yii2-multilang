@@ -12,6 +12,8 @@ namespace jarrus90\Multilang\Components;
 
 use Yii;
 use yii\web\Request;
+use yii\helpers\ArrayHelper;
+use jarrus90\Multilang\Models\Language;
 
 /**
  * Request component
@@ -29,8 +31,11 @@ class MultilangRequest extends Request {
     
     public function resolve() {
         $resolve = parent::resolve();
+        $languages = Language::getDb()->cache(function ($db) {
+            return Language::find()->where(['enabled' => true])->asArray()->all();
+        });
+        Yii::$app->params['languages'] = ArrayHelper::map($languages, 'code', 'code');
         Yii::$app->language = $this->getCurrentLang();
-        Yii::$app->view->params['directionRtl'] = in_array(Yii::$app->language, ['he', 'ar']);
         return $resolve;
     }
     
@@ -42,7 +47,7 @@ class MultilangRequest extends Request {
      * @return string
      */
     protected function getCurrentLang(){
-        if(ISSET(Yii::$app->user->identity->lang)) {
+        if(!Yii::$app->user->isGuest && !empty(Yii::$app->user->identity->lang)) {
             $lang = Yii::$app->user->identity->lang;
         } else if(Yii::$app->session->get('lang')) {
             $lang = Yii::$app->session->get('lang');
