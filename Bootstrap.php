@@ -40,12 +40,7 @@ class Bootstrap implements BootstrapInterface {
                 $app->params['admin']['menu']['multilang'] = [
                     'label' => Yii::t('multilang', 'Languages'),
                     'position' => 90,
-                    'items' => [
-                        [
-                            'label' => Yii::t('multilang', 'Languages'),
-                            'url' => '/multilang/admin/index'
-                        ]
-                    ]
+                    'url' => '/multilang/admin/index'
                 ];
             }
             $app->params['yii.migrations'][] = '@jarrus90/Multilang/migrations/';
