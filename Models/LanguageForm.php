@@ -52,7 +52,7 @@ class LanguageForm extends \jarrus90\Core\Models\Model {
             'code' => Yii::t('multilang', 'Language code'),
             'name' => Yii::t('multilang', 'Name'),
             'enabled' => Yii::t('multilang', 'Enabled'),
-            'flag' => Yii::t('multilang', 'Language code'),
+            'flag' => Yii::t('multilang', 'Flag'),
         ];
     }
     

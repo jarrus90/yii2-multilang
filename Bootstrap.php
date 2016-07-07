@@ -18,6 +18,13 @@ class Bootstrap implements BootstrapInterface {
         /** @var Module $module */
         /** @var \yii\db\ActiveRecord $modelName */
         if ($app->hasModule('multilang') && ($module = $app->getModule('multilang')) instanceof Module) {
+            if (!isset($app->get('i18n')->translations['multilang*'])) {
+                $app->get('i18n')->translations['multilang*'] = [
+                    'class' => PhpMessageSource::className(),
+                    'basePath' => __DIR__ . '/messages',
+                    'sourceLanguage' => 'en-US'
+                ];
+            }
             if (!$app instanceof ConsoleApplication) {
                 $module->controllerNamespace = 'jarrus90\Multilang\Controllers';
                 $configUrlRule = [
@@ -30,12 +37,15 @@ class Bootstrap implements BootstrapInterface {
                 $configUrlRule['class'] = 'yii\web\GroupUrlRule';
                 $rule = Yii::createObject($configUrlRule);
                 $app->urlManager->addRules([$rule], false);
-            }
-            if (!isset($app->get('i18n')->translations['multilang*'])) {
-                $app->get('i18n')->translations['multilang*'] = [
-                    'class' => PhpMessageSource::className(),
-                    'basePath' => __DIR__ . '/messages',
-                    'sourceLanguage' => 'en-US'
+                $app->params['admin']['menu']['multilang'] = [
+                    'label' => Yii::t('multilang', 'Languages'),
+                    'position' => 90,
+                    'items' => [
+                        [
+                            'label' => Yii::t('multilang', 'Languages'),
+                            'url' => '/multilang/admin/index'
+                        ]
+                    ]
                 ];
             }
             $app->params['yii.migrations'][] = '@jarrus90/Multilang/migrations/';

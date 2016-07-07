@@ -5,6 +5,7 @@ namespace jarrus90\Multilang\Controllers;
 use Yii;
 use yii\base\Module as BaseModule;
 use jarrus90\Core\Web\Controllers\AdminCrudAbstract;
+use yii\filters\AccessControl;
 
 class AdminController extends AdminCrudAbstract {
     
@@ -19,6 +20,21 @@ class AdminController extends AdminCrudAbstract {
     protected $formClass = 'jarrus90\Multilang\Models\LanguageForm';
     
     protected $searchClass = 'jarrus90\Multilang\Models\LanguageSearch';
+
+    /** @inheritdoc */
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['languages_admin'],
+                    ],
+                ],
+            ],
+        ];
+    }
     
     /**
      * @param string  $id
