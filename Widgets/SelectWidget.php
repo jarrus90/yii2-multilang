@@ -14,8 +14,6 @@ class SelectWidget extends Widget {
      */
     public $showDisabled = false;
     
-    public $layout = '@jarrus90/Multilang/views/widgets/select';
-
     /**
      * Render block content
      * @return string
@@ -41,7 +39,10 @@ class SelectWidget extends Widget {
                 ];
             }
         }
-        return $this->render($this->layout, ['languages' => $list, 'current' => $current]);
+        return $this->render('@jarrus90/Multilang/views/widgets/select', [
+            'languages' => $list,
+            'current' => $current
+        ]);
     }
 
 }
