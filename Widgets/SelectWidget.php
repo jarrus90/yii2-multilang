@@ -24,7 +24,7 @@ class SelectWidget extends Widget {
         $languages = Language::getDb()->cache(function ($db) {
             $query = Language::find();
             if(!$this->showDisabled) {
-                $query->where(['enabled' => true]);
+                $query->where(['is_active' => true]);
             }
             return $query->asArray()->all();
         });

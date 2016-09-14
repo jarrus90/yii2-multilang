@@ -3,23 +3,35 @@
 namespace jarrus90\Multilang\Controllers;
 
 use Yii;
-use yii\base\Module as BaseModule;
-use jarrus90\Admin\Web\Controllers\AdminCrudAbstract;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
+use kartik\grid\EditableColumnAction;
+use jarrus90\Admin\Web\Controllers\AdminController AS BaseController;
+use jarrus90\Multilang\Models\Language;
+class AdminController extends BaseController {
 
-class AdminController extends AdminCrudAbstract {
-    
-    /**
-     *
-     * @var ContentFinder 
-     */
-    protected $finder;
-    
-    protected $modelClass = 'jarrus90\Multilang\Models\Language';
-    
-    protected $formClass = 'jarrus90\Multilang\Models\LanguageForm';
-    
-    protected $searchClass = 'jarrus90\Multilang\Models\LanguageSearch';
+    public function actions() {
+        return ArrayHelper::merge(parent::actions(), [
+            'update' => [
+                'class' => EditableColumnAction::className(),
+                'modelClass' => Language::className(),
+                'findModel' => function($id, $action) {
+                    $language = Language::findOne($id);
+                    $language->scenario = 'update';
+                    return $language;
+                },
+                'outputValue' => function ($model, $attribute, $key, $index) {
+                    return $model->$attribute;
+                },
+                'outputMessage' => function($model, $attribute, $key, $index) {
+                    return '';
+                },
+                'showModelErrors' => true,
+                'errorOptions' => ['header' => '']
+            ]
+        ]);
+    }
 
     /** @inheritdoc */
     public function behaviors() {
@@ -29,50 +41,105 @@ class AdminController extends AdminCrudAbstract {
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['languages_admin'],
+                        'roles' => ['admin_super'],
                     ],
                 ],
             ],
         ];
     }
-    
+
     /**
-     * @param string  $id
-     * @param BaseModule $module
-     * @param ContentFinder  $finder
-     * @param array   $config
+     * Show list of blacklisted words
+     * @return string
      */
-    public function __construct($id, $module, $config = []) {
-        parent::__construct($id, $module, $config);
+    public function actionIndex() {
+        $languageForm = Yii::createObject([
+                    'class' => Language::className(),
+                    'scenario' => 'create'
+        ]);
+        $filterModel = Yii::createObject([
+                    'class' => Language::className(),
+                    'scenario' => 'search'
+        ]);
+        Yii::$app->view->title = Yii::t('multilang', 'Languages');
+        return $this->render('index', [
+                    'filterModel' => $filterModel,
+                    'dataProvider' => $filterModel->search(Yii::$app->request->get()),
+                    'languageForm' => $languageForm
+        ]);
     }
 
     /**
-     * Shows create form.
-     * @return string|Response
-     * @throws \yii\base\InvalidConfigException
+     * Add new language
+     * @return string|\yii\web\Response
      */
     public function actionCreate() {
-        /** @var \jarrus90\User\models\Role|\jarrus90\User\models\Permission $model */
-        $model = Yii::createObject([
-                    'class' => $this->formClass,
-                    'scenario' => 'create',
-                    'item' => Yii::createObject([
-                        'class' => $this->modelClass,
-                    ])
+        $languageForm = Yii::createObject([
+                    'class' => Language::className(),
+                    'scenario' => 'create'
         ]);
-        $this->performAjaxValidation($model);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->item->code]);
-        }
 
-        return $this->render('item', [
-                    'model' => $model,
-        ]);
+        if ($languageForm->load(Yii::$app->request->post()) && $languageForm->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('multilang', 'Language was created.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('multilang', 'Language creation failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
     }
-    
-    protected function getItem($code) {
-        $modelClass = $this->modelClass;
-        return $modelClass::findOne(['code' => $code]);
+
+    public function actionDelete($code) {
+        $languageObj = $this->findLanguage($code);
+        if ($languageObj->delete()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('multilang', 'Language was deleted.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('multilang', 'Language delete failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
+
+    public function actionEnable($code) {
+        $languageObj = $this->findLanguage($code);
+        $languageObj->scenario = 'update';
+        $languageObj->setAttributes([
+            'is_active' => 1
+        ]);
+        if ($languageObj->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('multilang', 'Language enabled.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('multilang', 'Language enabling failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
+
+    public function actionDisable($code) {
+        $languageObj = $this->findLanguage($code);
+        $languageObj->scenario = 'update';
+        $languageObj->setAttributes([
+            'is_active' => 0
+        ]);
+        if ($languageObj->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('multilang', 'Language disabled.'));
+        } else {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('multilang', 'Language disabling failed.'));
+        }
+        return $this->redirect(Url::toRoute(['index']));
+    }
+
+    /**
+     * Finds the Language model based on its code value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param string $code
+     *
+     * @return Language the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findLanguage($code) {
+        $language = Language::findOne($code);
+        if ($language === null) {
+            throw new \yii\web\NotFoundHttpException('The requested language does not exist');
+        }
+        return $language;
     }
 
 }

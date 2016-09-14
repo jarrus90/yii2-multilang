@@ -32,7 +32,7 @@ class MultilangRequest extends Request {
     public function resolve() {
         $resolve = parent::resolve();
         $languages = Language::getDb()->cache(function ($db) {
-            return Language::find()->where(['enabled' => true])->asArray()->all();
+            return Language::find()->where(['is_active' => true])->asArray()->all();
         });
         Yii::$app->params['languages'] = ArrayHelper::map($languages, 'code', 'code');
         Yii::$app->language = $this->getCurrentLang();

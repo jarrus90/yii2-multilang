@@ -17,14 +17,29 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Are you sure you want to disable this language?' => 'Вы уверены что хотите отключить этот язык?',
+    'Are you sure you want to enable this language?' => 'Вы уверены что хотите включить этот язык?',
+    'Create new language' => 'Добавить новый язык',
+    'Disable' => 'Отключить',
+    'Enable' => 'Включить',
+    'Language creation failed.' => 'При создании языка произошла ошибка',
+    'Language delete failed.' => 'При удалении языка произошла ошибка',
+    'Language disabled.' => 'Язык отключен',
+    'Language disabling failed.' => 'При отключенни языка произошла ошибка',
+    'Language enabled.' => 'Язык включен',
+    'Language enabling failed.' => 'При включении языка произошла ошибка',
+    'Language was created.' => 'Язык успешно добавлен',
+    'Language was deleted.' => 'Язык удален',
+    'New language' => 'Добавить язык',
+    'Reset filter' => 'Сбросить фильтр',
+    'Flag' => 'Флаг',
     'Code must be unique' => 'Код должен быть уникальным',
     'Create' => 'Создать',
-    'Enabled' => 'Включено',
+    'Enabled' => 'Включен',
     'Language code' => 'Код языка',
+    'Languages' => 'Языки',
     'List' => 'Список',
     'Name' => 'Название',
     'Save' => 'Сохранить',
     'disabled' => 'отключен',
-    'Flag' => 'Флаг',
-    'Languages' => 'Языки'
 ];

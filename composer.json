@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0",
-        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-grid": ">=3.1.2",
         "kartik-v/yii2-widget-select2": "*",
         "jarrus90/yii2-core": "*",
         "jarrus90/yii2-admin": "*",

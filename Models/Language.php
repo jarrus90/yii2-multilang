@@ -16,6 +16,28 @@ class Language extends ActiveRecord {
         return '{{%languages}}';
     }
 
+    public function scenarios() {
+        return [
+            'create' => ['code', 'name', 'flag', 'is_active'],
+            'update' => ['name', 'flag', 'is_active'],
+            'search' => ['code', 'name', 'is_active'],
+        ];
+    }
+    
+    /**
+     * Validation rules
+     * @return array
+     */
+    public function rules() {
+        return [
+            'processRequired' => [['code', 'name', 'flag', 'is_active'], 'required', 'on' => ['create', 'update']],
+            'searchSafe' => [['code', 'name', 'is_active'], 'safe', 'on' => ['search']],
+            'codeUnique' => ['code', 'unique', 'targetClass' => Language::className(), 'message' => Yii::t('multilang', 'Code must be unique'), 'when' => function($model) {
+                    return $model->code != $model->_model->code;
+                }, 'on' => ['create', 'update']],
+        ];
+    }
+
     /**
      * Attribute labels
      * @return array
@@ -24,14 +46,41 @@ class Language extends ActiveRecord {
         return [
             'code' => Yii::t('multilang', 'Language code'),
             'name' => Yii::t('multilang', 'Name'),
-            'enabled' => Yii::t('multilang', 'Enabled'),
+            'flag' => Yii::t('multilang', 'Flag'),
+            'is_active' => Yii::t('multilang', 'Enabled'),
         ];
     }
 
     public static function listMap() {
         return ArrayHelper::map(static::find()->asArray()->all(), 'code', function($model) {
-                    return $model['name'] . ($model['enabled'] ? '' : ' (' . Yii::t('multilang', 'disabled') . ')');
+                    return $model['name'] . ($model['is_active'] ? '' : ' (' . Yii::t('multilang', 'disabled') . ')');
                 });
+    }
+
+    /**
+     * Search categories list
+     * @param $params
+     * @return \yii\data\ActiveDataProvider
+     */
+    public function search($params) {
+        $query = self::find();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 100,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'code' => SORT_DESC
+                ]
+            ]
+        ]);
+        if ($this->load($params) && $this->validate()) {
+            $query->andFilterWhere(['like', 'code', $this->code]);
+            $query->andFilterWhere(['like', 'name', $this->name]);
+            $query->andFilterWhere(['is_active' => $this->is_active]);
+        }
+        return $dataProvider;
     }
 
 }
