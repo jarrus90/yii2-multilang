@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 use kartik\grid\EditableColumnAction;
-use jarrus90\Admin\Web\Controllers\AdminController AS BaseController;
+use jarrus90\Core\Web\Controllers\AdminController AS BaseController;
 use jarrus90\Multilang\Models\Language;
 class AdminController extends BaseController {
 
