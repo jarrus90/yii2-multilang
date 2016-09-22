@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'id' => 'yii2-user-tests',
+    'id' => 'yii2-multilang-tests',
     'basePath' => dirname(__DIR__),
     'language' => 'en-US',
     'aliases' => [
@@ -12,6 +12,9 @@ return [
     ],
     'bootstrap' => ['jarrus90\Multilang\Bootstrap'],
     'modules' => [
+        'user' => [
+            'class' => 'jarrus90\User\Module'
+        ],
         'multilang' => [
             'class' => 'jarrus90\Multilang\Module'
         ],
