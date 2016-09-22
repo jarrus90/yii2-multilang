@@ -1,4 +1,6 @@
-# Yii2-multilang
+# Yii2-multilang 
+
+[![Build Status](https://travis-ci.org/jarrus90/yii2-multilang.svg?branch=master)](https://travis-ci.org/jarrus90/yii2-multilang)
 
 > **NOTE:** Module is in initial development. Anything may change at any time.
 
