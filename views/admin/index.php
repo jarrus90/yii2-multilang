@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\web\View;
 use kartik\grid\GridView;
-use kartik\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;
 
 /**
