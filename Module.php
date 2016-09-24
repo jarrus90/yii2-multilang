@@ -18,6 +18,8 @@ class Module extends BaseModule {
     public $urlRules = [
         'set/<lang:[A-Za-z0-9_-]+>' => 'change/set'
     ];
+
+    public $adminRoles = ['admin_super'];
     
     public $rtlLanguages = [
         'he', 'ar'
