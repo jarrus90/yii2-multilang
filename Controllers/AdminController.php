@@ -41,7 +41,7 @@ class AdminController extends BaseController {
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => Yii::$app->getModule('multilang')->adminRoles,
+                        'roles' => ['admin_super'],
                     ],
                 ],
             ],
