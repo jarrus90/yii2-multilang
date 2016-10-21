@@ -1,5 +1,7 @@
 <?php
 
+namespace jarrus90\Multilang\migrations;
+
 class m160706_175918_language_active_rename extends \yii\db\Migration {
 
     /**

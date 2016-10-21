@@ -43,8 +43,12 @@ class Bootstrap implements BootstrapInterface {
                     'icon' => '<i class="fa fa-fw fa-language"></i>',
                     'url' => '/multilang/admin/index'
                 ];
+            } else {
+                if(empty($app->controllerMap['migrate'])) {
+                    $app->controllerMap['migrate']['class'] = 'yii\console\controllers\MigrateController';
+                }
+                $app->controllerMap['migrate']['migrationNamespaces'][] = 'jarrus90\Multilang\migrations';
             }
-            $app->params['yii.migrations'][] = '@jarrus90/Multilang/migrations/';
         }
     }
 

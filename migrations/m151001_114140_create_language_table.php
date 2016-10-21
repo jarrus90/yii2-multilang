@@ -1,5 +1,9 @@
 <?php
 
+namespace jarrus90\Multilang\migrations;
+
+use Yii;
+
 class m151001_114140_create_language_table extends \yii\db\Migration {
 
     /**
