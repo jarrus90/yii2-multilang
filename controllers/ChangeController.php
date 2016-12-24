@@ -1,6 +1,6 @@
 <?php
 
-namespace jarrus90\Multilang\Controllers;
+namespace jarrus90\Multilang\controllers;
 
 use Yii;
 use jarrus90\Core\Web\Controllers\FrontController as Controller;
