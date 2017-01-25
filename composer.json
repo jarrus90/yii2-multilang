@@ -23,6 +23,13 @@
         "kartik-v/yii2-editable": "*",
         "jarrus90/yii2-core": "*"
     },
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "~0.3.1",
+        "codeception/phpbuiltinserver": "*",
+        "codeception/specify": "~0.4.3"
+    },
     "autoload": {
         "psr-4": {
             "jarrus90\\Multilang\\": ""

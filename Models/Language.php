@@ -5,17 +5,15 @@ namespace jarrus90\Multilang\Models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use jarrus90\Content\traits\ModuleTrait;
 
 class Language extends ActiveRecord {
-
-    use ModuleTrait;
 
     /** @inheritdoc */
     public static function tableName() {
         return '{{%languages}}';
     }
 
+    /** @inheritdoc */
     public function scenarios() {
         return [
             'create' => ['code', 'name', 'flag', 'is_active'],
