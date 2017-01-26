@@ -49,8 +49,12 @@ class Language extends ActiveRecord {
         ];
     }
 
-    public static function listMap() {
-        return ArrayHelper::map(static::find()->asArray()->all(), 'code', function($model) {
+    public static function listMap($hideInactive = false) {
+        $query = static::find();
+        if($hideInactive) {
+            $query->andWhere(['is_active' => true]);
+        }
+        return ArrayHelper::map($query->asArray()->all(), 'code', function($model) {
                     return $model['name'] . ($model['is_active'] ? '' : ' (' . Yii::t('multilang', 'disabled') . ')');
                 });
     }
