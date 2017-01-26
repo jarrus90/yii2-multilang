@@ -17,7 +17,5 @@ coverage:
     include:
             - controllers/*
             - Models/*
-            - Widgets/*
-            - views/*
             - Bootstrap.php
             - Module.php

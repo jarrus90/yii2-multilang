@@ -23,8 +23,11 @@ class Module extends BaseModule {
         'he', 'ar'
     ];
 
-    public function getIsRtl() {
-        return in_array(Yii::$app->language, $this->rtlLanguages);
+    public function getIsRtl($lang = false) {
+        if(!$lang) {
+            $lang = Yii::$app->language;
+        }
+        return in_array($lang, $this->rtlLanguages);
     }
 
 }
