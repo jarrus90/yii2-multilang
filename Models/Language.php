@@ -30,8 +30,11 @@ class Language extends ActiveRecord {
         return [
             'processRequired' => [['code', 'name', 'flag', 'is_active'], 'required', 'on' => ['create', 'update']],
             'searchSafe' => [['code', 'name', 'is_active'], 'safe', 'on' => ['search']],
-            'codeUnique' => ['code', 'unique', 'targetClass' => Language::className(), 'message' => Yii::t('multilang', 'Code must be unique'), 'when' => function($model) {
-                    return $model->code != $model->_model->code;
+            'codeUnique' => ['code', 'unique',
+                'targetClass' => Language::className(),
+                'message' => Yii::t('multilang', 'Code must be unique'),
+                'when' => function($model, $attribute) {
+                    return $model->{$attribute} != $model->getOldAttribute($attribute);
                 }, 'on' => ['create', 'update']],
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-return \yii\helpers\ArrayHelper::merge(require_once __DIR__ . '/common.php', [
+return \yii\helpers\ArrayHelper::merge(require(__DIR__ . '/common.php'), [
     'id' => 'yii2-multilang-tests',
     'aliases' => [
         '@bower' => VENDOR_DIR . '/bower-asset',
