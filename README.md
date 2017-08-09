@@ -27,8 +27,8 @@ YII 2.0
 php composer.phar update
 ~~~
 
-#Components
-##Multilang request
+# Components
+## Multilang request
 Sets current user language as application language
 ~~~php
     'components' => [
