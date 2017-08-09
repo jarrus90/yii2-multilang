@@ -3,9 +3,8 @@
 namespace jarrus90\Multilang\controllers;
 
 use Yii;
-use jarrus90\Core\Web\Controllers\FrontController as Controller;
 
-class ChangeController extends Controller {
+class ChangeController extends \yii\web\Controller {
     public function actionSet($lang) {
         if (!Yii::$app->user->isGuest) {
             Yii::$app->user->identity->scenario = 'language';
