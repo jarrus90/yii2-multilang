@@ -36,14 +36,6 @@ class Bootstrap implements BootstrapInterface {
                 $configUrlRule['class'] = 'yii\web\GroupUrlRule';
                 $rule = Yii::createObject($configUrlRule);
                 $app->urlManager->addRules([$rule], false);
-                $app->params['admin']['menu']['multilang'] = function() {
-                    return [
-                        'label' => Yii::t('multilang', 'Languages'),
-                        'position' => 90,
-                        'icon' => '<i class="fa fa-fw fa-language"></i>',
-                        'url' => '/multilang/admin/index'
-                    ];
-                };
             } else {
                 if(empty($app->controllerMap['migrate'])) {
                     $app->controllerMap['migrate']['class'] = 'yii\console\controllers\MigrateController';

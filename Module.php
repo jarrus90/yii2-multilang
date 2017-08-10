@@ -30,4 +30,15 @@ class Module extends BaseModule {
         return in_array($lang, $this->rtlLanguages);
     }
 
+    public function getAdminMenu() {
+        return [
+            'multilang' => [
+                'encode' => false,
+                'label' => '<i class="fa fa-fw fa-language"></i>' . Yii::t('multilang', 'Languages'),
+                'position' => 90,
+                'visible' => Yii::$app->user->can('admin_super'),
+                'url' => ['/multilang/admin/index']
+            ]
+        ];
+    }
 }
