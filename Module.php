@@ -33,7 +33,7 @@ class Module extends BaseModule {
     public function getAdminMenu() {
         return [
             'multilang' => [
-                'icon' => '<i class="fa fa-fw fa-language"></i>',
+                'icon' => 'fa fa-fw fa-language',
                 'label' =>  Yii::t('multilang', 'Languages'),
                 'position' => 90,
                 'visible' => Yii::$app->user->can('admin_super'),
