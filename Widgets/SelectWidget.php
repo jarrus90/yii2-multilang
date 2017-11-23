@@ -14,7 +14,7 @@ class SelectWidget extends Widget {
      */
     public $showDisabled = false;
     
-    public $layout = '@jarrus90/Multilang/views/widgets/select/frontend';
+    public $layout = '@jarrus90/Multilang/views/widgets/select';
 
     /**
      * Render block content
